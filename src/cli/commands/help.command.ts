@@ -5,7 +5,7 @@ export class HelpCommand implements Command {
     return '--help';
   }
 
-  public async execute(...params: string[]): Promise<void> {
+  public async execute(..._params: string[]): Promise<void> {
     console.info(`
     Программа для подготовки данных для REST API сервера.
         Пример:
