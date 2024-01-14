@@ -35,6 +35,8 @@ interface Coordinate {
     longitude: number
 }
 
+type PremiumFlag = 'premium' | '';
+type FavouriteFlag = 'favourite' | '';
 
 export interface RentalOffer {
     name: string,
@@ -43,14 +45,14 @@ export interface RentalOffer {
     city: City,
     imagePreview: string,
     image: string[],
-    premiumFlag: boolean,
-    favouriteFlag: boolean,
+    premiumFlag: PremiumFlag,
+    favouriteFlag: FavouriteFlag,
     rating: number,
     housingType: HousingType,
     countOfRooms: number,
     countOfGuests: number,
     rentalPrice: number,
-    comforts: Comforts,
+    comforts: Comforts | Comforts[],
     author: User,
     coordinates: Coordinate
 }
