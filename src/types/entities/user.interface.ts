@@ -1,6 +1,7 @@
 export interface User {
-	name: string,
+	username: string,
 	email: string,
-	avatar?: string,
 	password: string,
+	avatar?: string,
+	isPro: boolean
 }

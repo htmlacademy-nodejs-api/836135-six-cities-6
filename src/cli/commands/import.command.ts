@@ -1,7 +1,7 @@
-import { Command } from "./command.interface.js";
+import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
-  public public getCommandName(): string {
+  public getCommandName(): string {
     return '--import';
   }
 
