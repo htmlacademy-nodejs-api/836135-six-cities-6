@@ -1,4 +1,5 @@
 import { Command } from './command.interface.js';
+import { successColor } from '../../shared/libs/chalk/chalk.js';
 
 export class HelpCommand implements Command {
   public getCommandName(): string {
@@ -11,10 +12,10 @@ export class HelpCommand implements Command {
         Пример:
             cli.js --<command> [--arguments]
         Команды:
-            --version:                   # выводит номер версии
-            --help:                      # печатает этот текст
-            --import <path>:             # импортирует данные из TSV
-            --generate <n> <path> <url>  # генерирует произвольное количество тестовых данных
+            ${successColor('--version')}:                   # выводит номер версии
+            ${successColor('--help')}:                      # печатает этот текст
+            ${successColor('--import <path>')}:             # импортирует данные из TSV
+            ${successColor('--generate <n> <path> <url>')}  # генерирует произвольное количество тестовых данных
     `);
   }
 }

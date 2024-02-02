@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { Command } from './command.interface.js';
 import { resolve } from 'node:path';
+import { errorColor } from '../../shared/libs/chalk/chalk.js';
 
 type PackageJSONConfig = {
     version: string;
@@ -25,7 +26,7 @@ export class VersionCommand implements Command {
     const importedContent: unknown = JSON.parse(jsonContent);
     console.log(importedContent);
     if (!isPackageJSONConfig(importedContent)) {
-      throw new Error('Ошибка в парсинге файла json');
+      throw new Error(errorColor('Ошибка в парсинге файла json'));
     }
 
     return importedContent.version;
@@ -41,10 +42,10 @@ export class VersionCommand implements Command {
       const version = this.readVersion();
       console.info(version);
     } catch (error: unknown) {
-      console.error(`Ошибка в чтении версии из ${this.filePath}`);
+      console.error(`${errorColor('Ошибка в чтении версии из')} ${this.filePath}`);
 
       if (error instanceof Error) {
-        console.error(error.message);
+        console.error(errorColor(error.message));
       }
     }
   }

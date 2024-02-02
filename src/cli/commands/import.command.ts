@@ -1,5 +1,7 @@
 import { Command } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js';
+import { errorColor, warningColor } from '../../shared/libs/chalk/chalk.js';
+
 
 export class ImportCommand implements Command {
   public getCommandName(): string {
@@ -19,8 +21,8 @@ export class ImportCommand implements Command {
         throw err;
       }
 
-      console.error(`Невозможно импортировать данные из файла ${filename}`);
-      console.error(`Детали: ${err.message}`);
+      console.error(`${errorColor('Невозможно импортировать данные из файла')} ${filename}`);
+      console.error(`${warningColor('Детали:')} ${err.message}`);
     }
   }
 }

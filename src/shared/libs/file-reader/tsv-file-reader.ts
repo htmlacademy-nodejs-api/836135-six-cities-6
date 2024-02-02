@@ -48,11 +48,18 @@ export class TSVFileReader implements FileReader {
             avatar,
             isPro: Boolean(isPro)
           })))[0],
-        coordinates: ([coordinates.split(';')]
-          .map(([latitude, longitude]) => ({
-            latitude: Number.parseFloat(latitude),
-            longitude: Number.parseFloat(longitude)
-          })))[0]
+        coordinates: {
+          latitude: Number.parseInt(coordinates.slice(0, coordinates.indexOf(';'))),
+          longitude: Number.parseInt(
+            coordinates
+            .slice(coordinates.indexOf(';') + 1, coordinates.length)
+            .replace('\r', ''))
+        }
+        // coordinates: ([coordinates.split(';')]
+        //   .map(([latitude, longitude]) => ({
+        //     latitude: Number.parseFloat(latitude),
+        //     longitude: Number.parseFloat(longitude)
+        //   })))[0]
       }));
   }
 }
