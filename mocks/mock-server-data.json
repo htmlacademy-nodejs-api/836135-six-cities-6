@@ -1,0 +1,100 @@
+{
+    "api": {
+      "names": [
+        "Title1",
+        "Title2",
+        "Title3",
+        "Title4",
+        "Title5"
+      ],
+      
+        "descriptions": [
+        "description1",
+        "description2",
+        "description3",
+        "description4",
+        "description5"
+      ],
+      "cities": [
+        {
+            "city": "Paris",
+            "coordinates": [48.85661, 2.351499]
+        },
+        {
+            "city": "Cologne",
+            "coordinates": [50.938361, 6.959974]
+        },
+        {
+            "city": "Brussels",
+            "coordinates": [50.846557, 4.351697]
+        },
+        {
+            "city": "Paris",
+            "coordinates": [52.370216, 4.895168]
+        },
+        {
+            "city": "Hamburg",
+            "coordinates": [53.550341, 10.000654]
+        },
+        {
+            "city": "Dusseldorf",
+            "coordinates": [51.225402, 6.776314]
+        }
+      ],
+      "imagePreview": [
+        "preview1.jpg",
+        "preview2.jpg",
+        "preview3.jpg",
+        "preview4.jpg",
+        "preview5.jpg"
+      ],
+      "images": [
+        ["image11", "image12", "image13", "image14", "image15", "image16"],
+        ["image21", "image22", "image23", "image24", "image25", "image26"],
+        ["image31", "image32", "image33", "image34", "image35", "image36"],
+        ["image41", "image42", "image43", "image44", "image45", "image46"],
+        ["image51", "image52", "image53", "image54", "image55", "image56"]
+      ],
+      "emails": [
+        "snow@pisem.local",
+        "president@dka.local",
+        "fish@big.local",
+        "test@pisem.local",
+        "freedom@pisem.local",
+        "rolan@pochta.local",
+        "author@mir.local",
+        "test@lost.loca",
+        "kujo-fan@story.local"
+      ],
+      "avatars": [
+        "user.jpg",
+        "photo.jpg",
+        "awesome-avatar.jpg",
+        "roland.jpg",
+        "smite.jpg",
+        "coffee.jpg"
+      ],
+      "users": [
+        {
+            "username": "Sergey",
+            "password": "qwe12345"
+        },
+        {
+            "username": "Anton",
+            "password": "gdg12ef5"
+        },
+        {
+            "username": "Julia",
+            "password": "fde13rgt5"
+        },
+        {
+            "username": "Sofia",
+            "password": "wef4556"
+        },
+        {
+            "username": "Nikolay",
+            "password": "qwe12345"
+        }
+      ]
+    }
+  }
