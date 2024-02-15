@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
-import { RentalOffer } from '../../../types/entities/index.js';
+import { RentalOffer } from '../../../types/index.js';
 import { City } from '../../../types/entities/city.enum.js';
 import { HousingType } from '../../../types/entities/housingType.enum.js';
 
