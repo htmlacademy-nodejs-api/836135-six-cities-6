@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
-import { OfferGenerator } from "./offer-generator.interface.js";
-import { MockServerData, RentalOffer } from "../../../types/index.js";
-import { generateRandomValue, getRandomItem, getRandomItems } from "../../helpers/common.js";
-import { HousingType } from "../../../types/entities/housingType.enum.js";
+import dayjs from 'dayjs';
+import { OfferGenerator } from './offer-generator.interface.js';
+import { MockServerData, RentalOffer } from '../../../types/index.js';
+import { generateRandomValue, getRandomItem, getRandomItems } from '../../helpers/common.js';
+import { HousingType } from '../../../types/entities/housingType.enum.js';
 
 const MIN_PRICE = 100;
 const MAX_PRICE = 100000;
