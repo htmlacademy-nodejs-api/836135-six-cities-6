@@ -10,12 +10,13 @@ interface UserMock {
 
 
 export type MockServerData = {
+  comforts: string[],
   names: string[],
   descriptions: string[],
   publicationDate: Date,
   cities: CityMock[],
   imagePreview: string[],
-  imageы: string[][],
+  images: string[][],
   emails: string[],
   avatars: string[],
   users: UserMock[]
