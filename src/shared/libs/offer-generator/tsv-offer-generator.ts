@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { OfferGenerator } from './offer-generator.interface.js';
-import { MockServerData, RentalOffer } from '../../../types/index.js';
+import { MockServerData} from '../../../types/index.js';
 import { generateRandomValue, getRandomItem, getRandomItems } from '../../helpers/common.js';
 import { HousingType } from '../../../types/entities/housingType.enum.js';
 

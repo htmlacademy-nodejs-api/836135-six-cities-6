@@ -10,7 +10,7 @@ export interface RentalOffer {
     publicationDate: Date,
     city: City,
     imagePreview: string,
-    image: string[],
+    images: string[],
     premiumFlag: boolean,
     favouriteFlag: boolean,
     rating: number,
