@@ -1,18 +1,42 @@
-import { readFileSync } from 'node:fs';
+// import { readFileSync } from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
+import EventEmitter from 'node:events';
+import { createReadStream } from 'node:fs';
 // import { RentalOffer } from '../../../types/index.js';
 // import { City } from '../../../types/entities/city.enum.js';
 // import { HousingType } from '../../../types/entities/housingType.enum.js';
 
-export class TSVFileReader implements FileReader {
-  private rawData = '';
+const CHUNK_SIZE = 16384;
 
-  constructor(
-    private readonly filename: string
-  ) { }
+export class TSVFileReader extends EventEmitter implements FileReader {
+  constructor(private readonly filename: string) {
+    super();
+  }
 
-  public read(): void {
-    this.rawData = readFileSync(this.filename, 'utf-8');
+  public async read(): Promise<void> {
+    // this.rawData = readFileSync(this.filename, 'utf-8');
+    const readStream = createReadStream(this.filename, {
+      highWaterMark: CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
+
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of readStream) {
+      remainingData += chunk.toString();
+
+      while((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
+        const completeRow = remainingData.slice(0, nextLinePosition + 1);
+        remainingData = remainingData.slice(++nextLinePosition);
+        importedRowCount++;
+
+        this.emit('line', completeRow);
+      }
+    }
+
+    this.emit('end', importedRowCount);
   }
 
   // public toArray(): RentalOffer[] {
