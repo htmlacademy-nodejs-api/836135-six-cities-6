@@ -1,9 +1,10 @@
 import { Config } from './config.interface.js';
-import { DotenvParseOutput, config } from 'dotenv';
+import { config } from 'dotenv';
 import { Logger } from '../logger/index.js';
+import { configRestSchema, RestSchema } from './rest.schema.js';
 
-export class RestConfig implements Config {
-  private readonly config: NodeJS.ProcessEnv;
+export class RestConfig implements Config<RestSchema> {
+  private readonly config: RestSchema;
   constructor(
     private readonly logger: Logger
   ) {
@@ -13,11 +14,16 @@ export class RestConfig implements Config {
       throw new Error('Невозможно прочесть .env файл. Возможно файла не существует');
     }
 
-    this.config = <DotenvParseOutput>parsedOutput.parsed;
+
+    configRestSchema.load({});
+    configRestSchema.validate({ allowed: 'strict', output: this.logger.info });
+
+
+    this.config = configRestSchema.getProperties();
     this.logger.info('.env файл найден и успешно обработан');
   }
 
-  public get(key: string): string | undefined {
+  public get<T extends keyof RestSchema>(key: T): RestSchema[T] {
     return this.config[key];
   }
 }
