@@ -1,7 +1,7 @@
 import { Command } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js';
-import { errorColor, warningColor, successColor } from '../../shared/libs/chalk/chalk.js';
-import { createOffer, getErrorMessage } from '../../shared/helpers/offer.js';
+import { errorColor, successColor } from '../../shared/libs/chalk/chalk.js';
+import { createOffer, getErrorMessage } from '../../shared/helpers/index.js';
 
 export class ImportCommand implements Command {
   public getCommandName(): string {
