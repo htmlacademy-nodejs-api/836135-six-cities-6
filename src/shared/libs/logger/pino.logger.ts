@@ -3,13 +3,14 @@ import { injectable } from 'inversify';
 import { resolve } from 'node:path';
 import { Logger } from './logger.interface.js';
 import { getCurrentModuleDirectoryPath } from '../../helpers/index.js';
+import 'reflect-metadata';
 
 @injectable()
 export class PinoLogger implements Logger {
   // private readonly logger: PinoInstance;
   private logger: PinoInstance;
 
-  constuctor() {
+  constructor() {
     const modulePath = getCurrentModuleDirectoryPath();
     const logFilePath = 'logs/rest.log';
     const destination = resolve(modulePath, '../../../', logFilePath);

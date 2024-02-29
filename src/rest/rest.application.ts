@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Logger } from '../shared/libs/logger/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
 import { Component } from '../types/index.js';
+import 'reflect-metadata';
 
 @injectable()
 export class RestApplication {
