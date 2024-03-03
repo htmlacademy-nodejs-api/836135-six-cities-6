@@ -2,6 +2,7 @@ import { RentalOffer } from '../../types/index.js';
 import { HousingType } from '../../types/entities/housingType.enum.js';
 import { City } from '../../types/entities/city.enum.js';
 import { Comforts } from '../../types/entities/comforts.enum.js';
+import { UserType } from '../../types/entities/userType.enum.js';
 
 
 export function createOffer(offerData: string): RentalOffer {
@@ -25,12 +26,12 @@ export function createOffer(offerData: string): RentalOffer {
   ] = offerData.replace('\n', '').split('\t');
 
   const author = ([userInfo.split(';')]
-    .map(([username, email, password, avatar, isPro]) => ({
+    .map(([username, email, password, avatar, userType]) => ({
       username,
       email,
       password,
       avatar,
-      isPro: Boolean(isPro)
+      userType: userType as UserType
     })))[0];
 
   const coordinates = ([coordinateInfo.split(';')]
