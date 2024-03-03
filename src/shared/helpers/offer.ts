@@ -1,6 +1,7 @@
 import { RentalOffer } from '../../types/index.js';
 import { HousingType } from '../../types/entities/housingType.enum.js';
 import { City } from '../../types/entities/city.enum.js';
+import { Comforts } from '../../types/entities/comforts.enum.js';
 
 
 export function createOffer(offerData: string): RentalOffer {
@@ -55,7 +56,7 @@ export function createOffer(offerData: string): RentalOffer {
     countOfRooms: Number.parseInt(countOfRooms, 10),
     countOfGuests: Number.parseInt(countOfGuests, 10),
     rentalPrice: Number.parseInt(rentalPrice, 10),
-    comforts: comforts.split(';'),
+    comforts: (comforts.split(';')) as Comforts[],
     author,
     coordinates
   };
