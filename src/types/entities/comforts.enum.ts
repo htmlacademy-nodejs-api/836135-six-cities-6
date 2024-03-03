@@ -1,6 +1,6 @@
 export enum Comforts {
   Breakfast = 'Breakfast',
-  AirConditioning = 'Air conditioning ',
+  AirConditioning = 'Air conditioning',
   Laptop = 'Laptop friendly workspace',
   BabySeat = 'Baby seat',
   Washer = 'Washer',

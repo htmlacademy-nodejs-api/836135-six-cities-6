@@ -76,9 +76,7 @@ export class RentalOfferEntity extends defaultClasses.TimeStamps {
   })
   public authorId!: Ref<UserEntity>;
 
-  @prop({
-    type: () => Number,
-  })
+  @prop()
   public coordinates!: Coordinate;
 }
 
