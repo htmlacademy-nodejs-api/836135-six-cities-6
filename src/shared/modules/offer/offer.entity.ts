@@ -3,6 +3,7 @@ import { UserEntity } from '../user/user.entity.js';
 import { HousingType } from '../../../types/entities/housingType.enum.js';
 import { Comforts } from '../../../types/entities/comforts.enum.js';
 import { Coordinate } from '../../../types/entities/coordinate.type.js';
+import { City } from '../../../types/entities/city.enum.js';
 
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -23,6 +24,15 @@ export class RentalOfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ trim: true })
   public description!: string;
+
+  @prop()
+  public publicationDate!: Date;
+
+  @prop({
+    type: () => String,
+    enum: City
+  })
+  public city!: City;
 
   @prop()
   public imagePreview!: string;
@@ -64,7 +74,7 @@ export class RentalOfferEntity extends defaultClasses.TimeStamps {
     ref: UserEntity,
     required: true
   })
-  public userId!: Ref<UserEntity>;
+  public authorId!: Ref<UserEntity>;
 
   @prop({
     type: () => Number,
