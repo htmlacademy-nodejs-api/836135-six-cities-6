@@ -1,0 +1,395 @@
+openapi: "3.0.3"
+info:
+  title: API сервер для проекта «Шесть городов».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Шесть городов».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+tags:
+  - name: offers
+    description: Действия с объявлениями.
+  - name: comments
+    description: Действия с комментариями.
+  - name: users
+    description: Действия с пользователем.
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Регистрация пользователя
+      description: Регистрирует нового пользователя.
+
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUser"
+        required: true
+
+      responses:
+        "201":
+          description: Пользователь зарегистрирован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: Ошибка при проверке введенных данных.
+        "409":
+          description: Пользователь с таким email уже существует.
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя
+      description: Авторизует пользователя на основе логина и пароля
+
+      requestBody:
+        description: Информация об авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userLogin"
+        required: true
+
+      responses:
+        "200":
+          description: Пользователь успешно авторизован.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: Ошибка проверки данных.
+        "401":
+          description: Указаны неверные данные.
+
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: Завершение сессии пользователем
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: fdfkjsefsudfsadfsadvko565tsfdafasuf
+
+      responses:
+        "204":
+          description: Осуществлен выход.
+        "401":
+          description: Пользователь не авторизован.
+
+  /users/status:
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя
+      description: Возвращает информацию об авторизованном пользователе
+
+      parameters:
+        - name: Authorization
+          description: Токен авторизации
+          in: header
+          required: true
+          schema:
+            type: string
+            example: fdfkjsefsudfsadfsadvko565tsfdafasuf
+      responses:
+        "200":
+          description: Пользователь авторизован. Токен валиден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "401":
+          description: Пользователь не авторизован. Невалидный токен
+
+  # /users/{userId}/avatar:
+  #   post:
+  #     tags:
+  #       - users
+  #     summary: Загрузить изображение аватара
+  #     description: Загружает изображение аватара пользователя. Изображение
+  #       аватара должно быть в формате `png` или `jpg`.
+  #     responses: 
+        
+
+  /offers:
+    post:
+      tags:
+        - offers
+      summary: Создание нового предложения об аренде
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: fdfkjsefsudfsadfsadvko565tsfdafasuf
+
+      requestBody:
+        description: Информация для создания нового предложения
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createOffer"
+        required: true
+
+      responses:
+        "201": 
+          description: Новое предложение создано.
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/offer"
+        "400": 
+          description: Ошибка проверки данных.
+        "401":
+          description: Пользователь не авторизован.
+
+    get:
+      tags:
+        - offers
+      summary: Получение списка предложений об аренде.
+
+      parameters:
+        - name: amount
+          in: query
+          description: Количество предложений в списке. По умолчанию 60.
+          schema:
+            type: number
+            default: 60
+            example: 100
+
+      responses:
+        "200":
+          description: Список предложения получен.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/offerPreview"
+
+components:
+  schemas:
+    userPattern:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Sergey
+
+        email:
+          type: string
+          example: sergey@yandex.ru
+
+        userType:
+          type: string
+          enum:
+            - обычный
+            - pro
+          example: обычный
+
+    user:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/userPattern"
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+    createUser:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/userPattern"
+      properties:
+        password:
+          type: string
+          example: qwerty654
+      required:
+        - username
+        - email
+        - password
+        - userType
+
+    userLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: sergey@sergey.com
+        password:
+          type: string
+          example: qwergbnd5949
+      required:
+        - email
+        - password
+
+    offerPattern:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Отель Морская звезда
+        city:
+          type: string
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+          example: Paris
+        previewImage:
+          type: string
+          example: image11.jpg
+        premiumFlag:
+          type: boolean
+          example: true
+        favouriteFlag:
+          type: boolean
+          example: true
+        comforts:
+          type: string
+          enum:
+            - apartment
+            - house
+            - room
+            - hotel
+          example: house
+        price:
+          type: number
+          example: 5555
+
+    offer:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/offerPattern"
+      properties:
+        id:
+          type: integer
+          example: 1
+          readOnly: true
+        description:
+          type: string
+          example: Description1
+        publicationDate:
+          type: string
+          example: 2024-02-27T15:22:11Z
+        images:
+          type: array
+          items:
+            type: string
+          example:
+            [
+              "image1.jpg",
+              "image2.jpg",
+              "image3.jpg",
+              "image4.jpg",
+              "image5.jpg",
+            ]
+        countOfRooms:
+          type: number
+          example: 5
+        countOfGuests:
+          type: number
+          example: 6
+        comforts:
+          type: array
+          items:
+            type: string
+            enum:
+              - Breakfast
+              - Air conditioning
+              - Laptop friendly workspace
+              - Baby seat
+              - Washer
+              - Towels
+              - Fridge
+          example: ["Breakfast", "Towels"]
+        author:
+          $ref: "#/components/schemas/user"
+        countOfComments:
+          type: number
+          example: 10
+        coordinates:
+          $ref: "#/components/schemas/coordinates"
+
+    offerPreview:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 4
+              readOnly: true
+            rating:
+              type: number
+              example: 3.1
+            сountOfComments:
+              type: number
+              example: 116
+
+    createOffer:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/offerPattern"
+      properties:
+        description:
+          type: string
+          example: Description1
+        images:
+          type: array
+          items:
+            type: string
+          example:
+            [
+              "image1.jpg",
+              "image2.jpg",
+              "image3.jpg",
+              "image4.jpg",
+              "image5.jpg",
+            ]
+        countOfRooms:
+          type: number
+          example: 5
+        countOfGuests:
+          type: number
+          example: 6
+        coordinates:
+          $ref: "#/components/schemas/coordinates"
+      required:
+        - name
+        - description
+        - city
+        - previewImage
+        - images
+        - premiumFlag
+        - favouriteFlag
+        - housingType
+        - countOfRooms
+        - countOFGuests
+        - price
+        - сomforts
+
+    coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          example: 52.765443
+        longitude:
+          type: number
+          example: 7.865343

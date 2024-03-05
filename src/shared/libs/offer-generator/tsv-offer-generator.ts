@@ -3,6 +3,7 @@ import { OfferGenerator } from './offer-generator.interface.js';
 import { MockServerData} from '../../../types/index.js';
 import { generateRandomValue, getRandomItem, getRandomItems } from '../../helpers/common.js';
 import { HousingType } from '../../../types/entities/housingType.enum.js';
+import { UserType } from '../../../types/entities/userType.enum.js';
 
 const MIN_PRICE = 100;
 const MAX_PRICE = 100000;
@@ -41,12 +42,12 @@ export class TSVOfferGenerator implements OfferGenerator {
     const price = generateRandomValue(MIN_PRICE, MAX_PRICE);
     const createdDate = dayjs()
       .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day');
-    const isUserPro = Boolean(generateRandomValue(0, 1));
+    const userType = getRandomItem([UserType.Pro, UserType.Regular]);
     const { city, coordinates } = cityInfo;
     const coordinateString = coordinates.join(';');
     const { username, password } = user;
 
-    const userInfoString = `${username};${email};${password};${avatar};${isUserPro}`;
+    const userInfoString = `${username};${email};${password};${avatar};${userType}`;
 
     return [
       title, description, createdDate, city, imagePreview, images, premium, favourite, rating, housingType, countOfRooms, countOfGuests, price, comforts, userInfoString, coordinateString
