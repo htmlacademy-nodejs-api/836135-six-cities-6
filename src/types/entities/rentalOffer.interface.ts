@@ -1,5 +1,5 @@
 import { City } from './city.enum.js';
-import { Comforts } from './comfortsType.interface.js';
+import { Comforts } from './comforts.enum.js';
 import { Coordinate } from './coordinate.type.js';
 import { HousingType } from './housingType.enum.js';
 import { User } from './user.interface.js';
@@ -18,7 +18,7 @@ export interface RentalOffer {
     countOfRooms: number,
     countOfGuests: number,
     rentalPrice: number,
-    comforts: Comforts[],
+    comforts: Array<Comforts>,
     author: User,
     coordinates: Coordinate
 }

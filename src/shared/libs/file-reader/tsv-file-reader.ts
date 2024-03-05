@@ -27,56 +27,17 @@ export class TSVFileReader extends EventEmitter implements FileReader {
     for await (const chunk of readStream) {
       remainingData += chunk.toString();
 
-      while((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
+      while ((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
         const completeRow = remainingData.slice(0, nextLinePosition + 1);
         remainingData = remainingData.slice(++nextLinePosition);
         importedRowCount++;
 
-        this.emit('line', completeRow);
+        await new Promise((resolve) => {
+          this.emit('line', completeRow, resolve);
+        });
       }
     }
 
     this.emit('end', importedRowCount);
   }
-
-  // public toArray(): RentalOffer[] {
-  //   if (!this.rawData) {
-  //     throw new Error('Файл не прочитан');
-  //   }
-
-  //   return this.rawData
-  //     .split('\n')
-  //     .filter((row) => row.trim().length > 0)
-  //     .map((line) => line.split('\t'))
-  //     .map(([name, description, publicationDate, city, imagePreview, image, premiumFlag, favouriteFlag, rating, housingType, countOfRooms, countOfGuests, rentalPrice, comforts, author, coordinates]) => ({
-  //       name,
-  //       description,
-  //       publicationDate: new Date(publicationDate),
-  //       city: city as City,
-  //       imagePreview,
-  //       images: image.split(';')
-  //         .map((img) => img),
-  //       premiumFlag: Boolean(premiumFlag),
-  //       favouriteFlag: Boolean(favouriteFlag),
-  //       rating: Number.parseFloat(rating),
-  //       housingType: housingType as HousingType,
-  //       countOfRooms: Number.parseInt(countOfRooms, 10),
-  //       countOfGuests: Number.parseInt(countOfGuests, 10),
-  //       rentalPrice: Number.parseInt(rentalPrice, 10),
-  //       comforts: comforts.split(';'),
-  //       author: ([author.split(';')]
-  //         .map(([username, email, password, avatar, isPro]) => ({
-  //           username,
-  //           email,
-  //           password,
-  //           avatar,
-  //           isPro: Boolean(isPro)
-  //         })))[0],
-  //       coordinates: ([coordinates.split(';')]
-  //         .map(([latitude, longitude]) => ({
-  //           latitude: Number.parseFloat(latitude),
-  //           longitude: Number.parseFloat(longitude)
-  //         })))[0]
-  //     }));
-  // }
 }
